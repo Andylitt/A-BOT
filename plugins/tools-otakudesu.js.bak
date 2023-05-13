@@ -1,0 +1,28 @@
+import fetch from 'node-fetch'
+let handler = async (m, { args, usedPrefix, command, text }) => {
+if (!text) throw `Example ${usedPrefix}${command} Mushoku Tensei`
+      try{
+var anu = await fetchJson(`https://api.caliph.biz.id/api/otakudesu?query=${text}&apikey=caliphkey`)
+var ini_txt = `Title : ${anu.judul}\nRanting : ${anu.rating}\nProduser : ${anu.produser}\nType : ${anu.type}\nTotal Episode : ${anu.episode}\nDurasi : ${anu.durasi}\nWaktu rilis : ${anu.rilis}\nStudio : ${anu.studio}\nGendre : ${anu.genre}\n\nLink anime nya : ${anu.LinkDown}`
+
+conn.sendMessage(m.chat, { image: { url: anu.thumb }, caption: ini_txt }, { quoted: m})
+        } catch (err){
+m.reply("Anime tidak di temukan")
+      }
+}
+handler.help = ['anime <judul anime>']
+handler.tags = ['tools']
+handler.command = /^(otakudesu|anime)$/i
+
+export default handler
+
+const fetchJson = (url, options) => new Promise(async(resolve, reject) => {
+    fetch(url, options)
+        .then(response => response.json())
+        .then(json => {
+            resolve(json)
+        })
+        .catch((err) => {
+            reject(err)
+        })
+})

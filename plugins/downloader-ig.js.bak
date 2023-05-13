@@ -1,0 +1,15 @@
+import instagramGetUrl from 'instagram-url-direct'
+let handler = async (m, { conn, args, usedPrefix, command }) => {
+    if (!args[0]) throw `Use example ${usedPrefix}${command} https://www.instagram.com/p/ByxKbUSnubS/?utm_source=ig_web_copy_link`
+    
+    await m.reply(wait)
+    let anu = await axios.get(`https://api.zahwazein.xyz/downloader/instagram/story?apikey=LuOlangNgentot&url=${args[0]}`)
+    let result = anu.data.result.url.url
+    conn.sendFile(m.chat, result, 'instagram.mp4', `『 - - - - - ɪɴsᴛᴀɢʀᴀᴍ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ - - - - - 』*`, m)
+}
+handler.help = ['ig'].map(v => v + ' <url>')
+handler.tags = ['downloader']
+
+handler.command = /^(ig(dl)?)$/i
+
+export default handler
